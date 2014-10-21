@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Birdify Demo</title>
+		<link rel="stylesheet" href="stylesheets/demo.css" type="text/css"/>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	</head>
+	<body>
+		<div class="main">
+			<h1>Birdify is a CSS ruleset and JS utility for making text flap</h1>
+			<h3> Specifically, text like this: {
+				<span class="bird bird1"><span class="left wing">[</span>0<span class="right wing">]</span></span>,
+				<span class="bird bird2"><span class="left wing">[</span>1<span class="right wing">]</span></span>,
+				<span class="bird bird3"><span class="left wing">[</span>2<span class="right wing">]</span></span>,
+				<span class="bird bird2"><span class="left wing">{</span><span class="right wing">}</span></span>,
+				<span class="bird text-bird"><span class="left wing">fun</span>c<span class="right wing">tion</span></span><span class="bird bird1"><span class="left wing">(</span><span class="right wing">)</span></span> }
+			</h3>
+			<div class="function body example" onclick="scanAndBirdify('.example');">
+				
+				<h2> Here's a piece of function code </h2>
+
+				<div>Birdify.birdifyText=function(ctx){</div>
+				<div>&nbsp;&nbsp;&nbsp;&nbsp;ctx.addClass("birdified");</div>
+				<div>&nbsp;&nbsp;&nbsp;&nbsp;ctx.addClass("with-text");</div>
+				<div>&nbsp;&nbsp;&nbsp;&nbsp;ctx.addClass(Birdify.selectFlightPath());</div>
+				<div>}
+			</div>
+		</div>
+		<script>
+
+			function Birdify(ctx){
+				ctx.addClass("birdified");
+				ctx.addClass("with-paren");
+				ctx.addClass(Birdify.selectFlightPath());
+			}
+
+			Birdify.birdifyText=function(ctx){
+				ctx.addClass("birdified");
+				ctx.addClass("with-text");
+				ctx.addClass(Birdify.selectFlightPath());
+			}
+
+			Birdify.roundRobin=1;
+			Birdify.numPaths=6;
+
+			Birdify.selectFlightPath=function(){
+				var selected = Birdify.roundRobin;
+				Birdify.roundRobin++;
+				if (Birdify.roundRobin > Birdify.numPaths){
+					Birdify.roundRobin = 1;
+				}
+				return "flightpath-" + selected;
+			}
+
+			Birdify.swapElements=true;
+			Birdify.wrapParenReplacer = '<span class="bird-candidate-paren"><span class="left wing">$1</span>$2<span class="right wing">$3</span></span>';
+			Birdify.wrapTextReplacer = '<span class="bird-candidate-text"><span class="left wing">$1</span>$2<span class="right wing">$3</span></span>';
+
+			Birdify.wrapBirdTextRecursive = function(ctx){
+				ctx.contents().filter(function() {return this.nodeType != Node.TEXT_NODE })
+					.each(function(){ Birdify.wrapBirdTextRecursive($(this));});
+				ctx.contents().filter(function() {return this.nodeType == Node.TEXT_NODE })
+					.each(function(){
+						$(this).replaceWith($(this).text()
+							.replace(/([{\[\(])([^\{^\[^\(^\}^\]^\)]?)([}\]\)])/g, Birdify.wrapParenReplacer)
+							.replace(/([A-Za-z0-9]{5,8})([\.+@&\*=])([A-Za-z0-9]{5,8})/g, Birdify.wrapTextReplacer)
+							.replace(/([A-Za-z0-9]{3,4})([\.+@&\*=])([A-Za-z0-9]{3,4})/g, Birdify.wrapTextReplacer));
+					});
+			}
+
+			Birdify.activateBirds = function(ctx){
+				ctx.find('.bird-candidate-text').each(function(){
+					$(this).removeClass("bird-candidate-text");
+					Birdify.birdifyText($(this));
+				});
+				ctx.find('.bird-candidate-paren').each(function(){
+					$(this).removeClass("bird-candidate-paren");
+					Birdify($(this));
+				});
+			}
+
+			function scanAndBirdify(selector){
+				var workingSpace = $(selector);
+				Birdify.wrapBirdTextRecursive(workingSpace);
+				Birdify.activateBirds(workingSpace);
+			}
+
+		</script>
+	</body>
+</html>

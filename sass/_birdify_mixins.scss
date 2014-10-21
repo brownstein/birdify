@@ -1,0 +1,322 @@
+// Birdify is a collection of keyframes and mixins that allow you to make elements flap/fly around on a page
+// using pure CSS.
+//
+// Ensure that whatever object you are using a bird has two wings labeled left and right, and does not wrap lines
+// automatically - I strongly reccommend going with an inline block approach here. Label your wings with classes.
+
+@import "compass"; // We need compass for trig calculations
+
+// Wing flapping mixin
+// flapTime is the total animation time, 
+// flapBody indicates whether the body should bounce up and down in the air
+// parenMode indicates whether the wing divs/spans are parenthesis (short) or text (long)
+
+@mixin flapWings($flapTime, $flapBody, $parenMode){
+	@if ($flapBody){
+		-webkit-animation: flapBody $flapTime infinite linear;
+	}
+	@if ($parenMode){
+		.left.wing{
+			-webkit-animation: paren-flap-left-start $flapTime/2 1 linear, paren-flap-left $flapTime 0 infinite linear;
+			animation: paren-flap-left-start $flapTime/2 1 linear, paren-flap-left $flapTime $flapTime/2 infinite linear;
+		}
+		.right.wing{
+			-webkit-animation: paren-flap-right-start $flapTime/2 1 linear, paren-flap-right $flapTime 0 infinite linear;
+			animation: paren-flap-right-start $flapTime/2 1 linear, paren-flap-right $flapTime $flapTime/2 infinite linear;
+		}
+	} @else {
+		.left.wing{
+			-webkit-transform-origin: 100% 50%;
+			transform-origin: 100% 50%;
+			-webkit-animation: txt-flap-left-start $flapTime/3 0 1 linear, txt-flap-left $flapTime 0 infinite linear;
+			animation: txt-flap-left-start $flapTime/3 1 linear, txt-flap-left $flapTime $flapTime/3 infinite linear;
+		}
+		.right.wing{
+			-webkit-transform-origin: 0% 50%;
+			transform-origin: 0% 50%;
+			-webkit-animation: txt-flap-right-start $flapTime/3 0 1 linear, txt-flap-right $flapTime 0 infinite linear;
+			animation: txt-flap-right-start $flapTime/3 1 linear, txt-flap-right $flapTime $flapTime/3 infinite linear;
+		}
+	}
+}
+
+// Animation definitions for flying offscreen
+
+// Utility unit-stripper
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+// Flightpath animation body generator - used to make birds zoom offscreen
+// cp1x | cp1y: bezier control point 1 coords;
+// cp2x | cp2y: bezier control point 2 coords;
+// endx | endy: bezier control point 3 (final location) coords;
+// steps: the number of steps to break the animation down into;
+
+@mixin flyOffscreenKeyframeBody($cp1x, $cp1y, $cp2x, $cp2y, $endx, $endy, $steps){
+	
+	$delt1x: $cp1x;
+	$delt1y: $cp1y;
+	$delt2x: $cp2x - $endx;
+	$delt2y: $cp2y - $endy;
+
+	$px:0;
+	$py:0;
+	$dx:0;
+	$dy:0;
+
+	@for $i from 0 through $steps {
+		$pct: floor(100*$i/$steps)*1%;
+		
+		$p2m: 3 * pow(1-($i/$steps),2) * pow($i/$steps,1);
+		$p3m: 3 * pow(1-($i/$steps),1) * pow($i/$steps,2);
+		$p4m: pow($i/$steps, 3);
+
+		$x: $delt1x*$p2m + $delt2x*$p3m + $endx*$p4m;
+		$y: $delt1y*$p2m + $delt2y*$p3m + $endy*$p4m;
+
+		$ddx: $x - $dx - $px;
+		$ddy: $x - $dx - $px;
+		$dx: $x - $px;
+		$dy: $y - $py;
+		$px:$x;
+		$py:$y;
+
+		$rot: 0deg;
+		@if (($ddx*4+$dx) != 0){
+			$rot: floor( 10 * atan(strip-unit($ddx*4+$dx)) )*1deg;
+		}
+
+		#{$pct} {
+			-webkit-transform: translate($x,$y) rotate($rot); 
+			transform: translate($x,$y) rotate($rot);
+			@if (1-($i/$steps) <= 0.2){
+				opacity: (1-($i / $steps))/0.2;
+			}
+		}
+	}
+}
+
+// mixin for building flight path keyframes
+// name : the name you will reference this flightpath by
+// cp1x | cp1y: bezier control point 1 coords;
+// cp2x | cp2y: bezier control point 2 coords;
+// endx | endy: bezier control point 3 (final location) coords;
+// steps: the number of steps to break the animation down into;
+@mixin buildFlightPath($name, $cp1x, $cp1y, $cp2x, $cp2y, $endx, $endy, $steps){
+	@-webkit-keyframes #{$name}{
+		@include flyOffscreenKeyframeBody($cp1x, $cp1y, $cp2x, $cp2y, $endx, $endy, $steps);
+	}
+	@keyframes  #{$name}{
+		@include flyOffscreenKeyframeBody($cp1x, $cp1y, $cp2x, $cp2y, $endx, $endy, $steps);
+	}
+}
+
+@mixin followFlightPath($name, $duration){
+	-webkit-animation: #{$name} $duration linear, hideBird 1s infinite;
+	animation: #{$name} $duration linear, hideBird 1s $duration infinite;
+}
+
+/* Begin Birdify keyframe definitions... */
+
+/* Animation definitions for flapping motions */
+
+$wingSpread: 0.3em;
+
+@-webkit-keyframes flapBody {
+	0% {
+		-webkit-transform: translate(0, 0em);
+		transform: translate(0, 0em);
+	}
+	50% {
+		-webkit-transform: translate(0, 0.2em);
+		transform: translate(0, 0.2em);
+	}
+	100% {
+		-webkit-transform: translate(0, 0em);
+		transform: translate(0, 0em);
+	}
+}
+
+/* Keyframe to hide birds after they fly away */
+
+@-webkit-keyframes hideBird {
+	0% {opacity:0;}
+	100% {opacity:0;}
+}
+@keyframes hideBird{
+	0% {opacity:0;}
+	100% {opacity:0;}
+}
+
+/* Keyframes for flapping parentheses */
+
+@-webkit-keyframes paren-flap-left-start {
+	0% {
+		-webkit-transform: rotate(0deg) translate(0, 0);
+		transform: rotate(0deg) translate(0, 0);
+	}
+	100% { 
+		-webkit-transform: rotate(70deg) translate(0, $wingSpread);
+		transform: rotate(70deg) translate(0, $wingSpread);
+	}
+}
+
+@-webkit-keyframes paren-flap-right-start {
+	0% { 
+		-webkit-transform: rotate(0deg) translate(0, 0);
+		transform: rotate(0deg) translate(0, 0);
+	}
+	100% { 
+		-webkit-transform: rotate(-70deg) translate(0, $wingSpread);
+		transform: rotate(-70deg) translate(0, $wingSpread);
+	}
+}
+
+@-webkit-keyframes paren-flap-left {
+	0% {
+		-webkit-transform: rotate(70deg) translate(0, $wingSpread);
+		transform: rotate(70deg) translate(0, $wingSpread);
+	}
+	40% { 
+		-webkit-transform: rotate(115deg) translate(0, $wingSpread);
+		transform: rotate(115deg) translate(0, $wingSpread);
+	}
+	95% { 
+		-webkit-transform: rotate(60deg) translate(0, $wingSpread);
+		transform: rotate(60deg) translate(0, $wingSpread);
+	}
+	100% { 
+		-webkit-transform: rotate(70deg) translate(0, $wingSpread);
+		transform: rotate(70deg) translate(0, $wingSpread);
+	}
+}
+
+@-webkit-keyframes paren-flap-right {
+	0% { 
+		-webkit-transform: rotate(-70deg) translate(0em, $wingSpread);
+		transform: rotate(-70deg) translate(0em, $wingSpread); 
+	}
+	40% { 
+		-webkit-transform: rotate(-115deg) translate(0em, $wingSpread);
+		transform: rotate(-115deg) translate(0em, $wingSpread);
+	}
+	95% { 
+		-webkit-transform: rotate(-60deg) translate(0em, $wingSpread);
+		transform: rotate(-60deg) translate(0em, $wingSpread);
+	}
+	100% { 
+		-webkit-transform: rotate(-70deg) translate(0em, $wingSpread);
+		transform: rotate(-70deg) translate(0em, $wingSpread);
+	}
+}
+
+@keyframes paren-flap-left-start {
+	0% { transform: rotate(0deg) translate(0, 0);}
+	100% { transform: rotate(70deg) translate(0, $wingSpread);}
+}
+
+@keyframes paren-flap-right-start {
+	0% { transform: rotate(0deg) translate(0, 0);}
+	100% { transform: rotate(-70deg) translate(0, $wingSpread);}
+}
+
+@keyframes paren-flap-left {
+	0% { transform: rotate(70deg) translate(0, $wingSpread);}
+	40% { transform: rotate(115deg) translate(0, $wingSpread);}
+	95% { transform: rotate(60deg) translate(0, $wingSpread);}
+	100% { transform: rotate(70deg) translate(0, $wingSpread);}
+}
+
+@keyframes paren-flap-right {
+	0% { transform: rotate(-70deg) translate(0em, $wingSpread);}
+	40% { transform: rotate(-115deg) translate(0em, $wingSpread);}
+	95% { transform: rotate(-60deg) translate(0em, $wingSpread);}
+	100% { transform: rotate(-70deg) translate(0em, $wingSpread);}
+}
+
+/* Keyframes for flapping text */
+
+@-webkit-keyframes txt-flap-left-start {
+	0% { 
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% { 
+		-webkit-transform: rotate(30deg);
+		transform: rotate(30deg);
+	}
+}
+
+@-webkit-keyframes txt-flap-right-start {
+	0% { 
+		-webkit-transform: rotate(0deg);
+		transform: rotate(0deg);
+	}
+	100% { 
+		-webkit-transform: rotate(-30deg);
+		transform: rotate(-30deg);
+	}
+}
+
+@-webkit-keyframes txt-flap-left {
+	0% { 
+		-webkit-transform: rotate(30deg);
+		transform: rotate(30deg);
+	}
+	40% { 
+		-webkit-transform: rotate(-35deg);
+		transform: rotate(-35deg);
+	}
+	95% {
+		-webkit-transform: rotate(40deg);
+	 	transform: rotate(40deg);
+	}
+	100% { 
+		-webkit-transform: rotate(30deg);
+		transform: rotate(30deg);
+	}
+}
+
+@-webkit-keyframes txt-flap-right {
+	0% { 
+		-webkit-transform: rotate(-30deg);
+		transform: rotate(-30deg);
+	}
+	40% { 
+		-webkit-transform: rotate(35deg);
+		transform: rotate(35deg);
+	}
+	95% {
+		-webkit-transform: rotate(-40deg);
+	 	transform: rotate(-40deg);
+	}
+	100% { 
+		-webkit-transform: rotate(-30deg);
+		transform: rotate(-30deg);
+	}
+}
+
+@keyframes txt-flap-left-start {
+	0% { transform: rotate(0deg);}
+	100% { transform: rotate(30deg);}
+}
+
+@keyframes txt-flap-right-start {
+	0% { transform: rotate(0deg);}
+	100% { transform: rotate(-30deg);}
+}
+
+@keyframes txt-flap-left {
+	0% { transform: rotate(30deg);}
+	40% { transform: rotate(-35deg);}
+	95% { transform: rotate(40deg);}
+	100% { transform: rotate(30deg);}
+}
+
+@keyframes txt-flap-right {
+	0% { transform: rotate(-30deg);}
+	40% { transform: rotate(35deg);}
+	95% { transform: rotate(-40deg);}
+	100% { transform: rotate(-30deg);}
+}
