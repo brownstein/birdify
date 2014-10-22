@@ -7,8 +7,25 @@
     <meta name="description" content="Birdify : Birdify makes your text fly around like birds.">
 
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/demo.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="birdify.js"></script>
 
     <title>Birdify</title>
+    <script type="text/javascript">
+    	function initialCountdown(){
+    		initialCountdown.countdownVal+=-1;
+    		$("h1").contents().replaceWith($("h1").text().replace(/[0-3]/g, initialCountdown.countdownVal));
+    		if (initialCountdown.countdownVal == 0){
+    			clearInterval(initialCountdown.countdownTimer);
+    			scanAndBirdify("h1");
+    		}
+    	};
+    	initialCountdown.countdownVal = 3;
+    	initialCountdown.countdownTimer = setInterval(initialCountdown, 1000);
+
+    </script>
   </head>
 
   <body>
@@ -18,7 +35,7 @@
         <header class="inner">
           <a id="forkme_banner" href="https://github.com/brownstein/birdify">View on GitHub</a>
 
-          <h1 id="project_title">Birdify</h1>
+          <h1 id="project_title">Birdify()</h1>
           <h2 id="project_tagline">Birdify makes your text fly around like birds.</h2>
 
             <section id="downloads">
