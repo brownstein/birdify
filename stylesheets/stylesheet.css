@@ -313,6 +313,17 @@ Full-Width Styles
   text-shadow: #111 0px 0px 10px;
 }
 
+#header_birds {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 10;
+  bottom: -0.5em;
+  height: 2em;
+  color: #fff;
+}
+
 #downloads {
   position: absolute;
   width: 210px;
