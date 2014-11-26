@@ -4,21 +4,17 @@
 
 @import "birdify_mixins.scss"; // import Birdify
 
-.main{
-	max-width: 800px;
-	margin: 1em auto;
-	border-top: 1px solid #ccc;
-}
 
 /* Birds are bound to inline-block styles to prevent wings from doing anything odd */
-.birdified, .bird{	
+.birdified{	
 	display: inline-block;
 }
 
-.birdified .wing, .bird .wing{
+.birdified .wing{
 	display: inline-block;
 }
 
+/* Bird-candidates are pre-wrapped spans that are waiting to become birds */
 .bird-candidate{
 	display: inline;
 	span{
@@ -26,14 +22,17 @@
 	}
 }
 
+/* Definitions for perenthesis-winged birds */
 .birdified.with-paren{
 	@include flapWings(0.3s, false, true);
 }
 
+/* Definitions for text-winged birds */
 .birdified.with-text{
 	@include flapWings(0.5s, false, false);
 }
 
+/* Definition of flightpaths-1 through flightpath-6 */
 .birdified{
 	@for $i from 1 through 6 {
 		&.flightpath-#{$i} {
@@ -42,6 +41,7 @@
 	}
 }
 
+/* Definitions of keyframes for flightpaths 1-6 */
 @for $i from 1 through 6{
 	$final_x: -800px;
 	$final_y: sin($i) * 100px;
@@ -56,11 +56,8 @@
 	@include buildFlightPath("birdPath-#{$i}", $x1,$y1,$x2,$y2,$final_x,$final_y,16);
 }
 
-h3 {
-	display: block;
-}
-
 /* Sample Bird definitions */
+/*
 h3:hover .bird1{
 	@include flapWings(0.3s, false, true);
 	@include followFlightPath("birdPath1", 1.5s);
@@ -79,9 +76,10 @@ h3:hover .bird3{
 h3:hover .text-bird{
 	@include flapWings(0.5s, false, false);
 	@include followFlightPath("birdPath2", 3s);
-}
+}*/
 
 /* Sample bird paths */
-@include buildFlightPath("birdPath1", -10px,10px,50px,60px,500px,10px,16);
-@include buildFlightPath("birdPath2", 10px,400px,-50px,40px,-500px,40px,16);
-@include buildFlightPath("birdPath3", -10px,30px,50px,150px,500px,170px,16);
+/*@include buildFlightPath("birdPath1", -10px,10px,50px,60px,500px,10px,16);
+//@include buildFlightPath("birdPath2", 10px,400px,-50px,40px,-500px,40px,16);
+//@include buildFlightPath("birdPath3", -10px,30px,50px,150px,500px,170px,16);*/
+

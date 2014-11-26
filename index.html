@@ -1,90 +1,157 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Birdify Demo</title>
-		<link rel="stylesheet" href="stylesheets/demo.css" type="text/css"/>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	</head>
-	<body>
-		<div class="main">
-			<h1>Birdify is a CSS ruleset and JS utility for making text flap</h1>
-			<h3> Specifically, text like this: {
-				<span class="bird bird1"><span class="left wing">[</span>0<span class="right wing">]</span></span>,
-				<span class="bird bird2"><span class="left wing">[</span>1<span class="right wing">]</span></span>,
-				<span class="bird bird3"><span class="left wing">[</span>2<span class="right wing">]</span></span>,
-				<span class="bird bird2"><span class="left wing">{</span><span class="right wing">}</span></span>,
-				<span class="bird text-bird"><span class="left wing">fun</span>c<span class="right wing">tion</span></span><span class="bird bird1"><span class="left wing">(</span><span class="right wing">)</span></span> }
-			</h3>
-			<div class="function body example" onclick="scanAndBirdify('.example');">
-				
-				<h2> Here's a piece of function code </h2>
 
-				<div>Birdify.birdifyText=function(ctx){</div>
-				<div>&nbsp;&nbsp;&nbsp;&nbsp;ctx.addClass("birdified");</div>
-				<div>&nbsp;&nbsp;&nbsp;&nbsp;ctx.addClass("with-text");</div>
-				<div>&nbsp;&nbsp;&nbsp;&nbsp;ctx.addClass(Birdify.selectFlightPath());</div>
-				<div>}
-			</div>
-		</div>
-		<script>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Birdify : Birdify makes your text fly around like birds.">
 
-			function Birdify(ctx){
-				ctx.addClass("birdified");
-				ctx.addClass("with-paren");
-				ctx.addClass(Birdify.selectFlightPath());
-			}
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/demo.css">
 
-			Birdify.birdifyText=function(ctx){
-				ctx.addClass("birdified");
-				ctx.addClass("with-text");
-				ctx.addClass(Birdify.selectFlightPath());
-			}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="birdify.js"></script>
 
-			Birdify.roundRobin=1;
-			Birdify.numPaths=6;
+    <title>Birdify</title>
+    <script type="text/javascript">
 
-			Birdify.selectFlightPath=function(){
-				var selected = Birdify.roundRobin;
-				Birdify.roundRobin++;
-				if (Birdify.roundRobin > Birdify.numPaths){
-					Birdify.roundRobin = 1;
-				}
-				return "flightpath-" + selected;
-			}
+      function initBirds(){
+        var headerBirds = Birdify($("#header_birds"));
+        headerBirds.fly(1000, 1500);
+      };
 
-			Birdify.swapElements=true;
-			Birdify.wrapParenReplacer = '<span class="bird-candidate-paren"><span class="left wing">$1</span>$2<span class="right wing">$3</span></span>';
-			Birdify.wrapTextReplacer = '<span class="bird-candidate-text"><span class="left wing">$1</span>$2<span class="right wing">$3</span></span>';
+      $(initBirds);
 
-			Birdify.wrapBirdTextRecursive = function(ctx){
-				ctx.contents().filter(function() {return this.nodeType != Node.TEXT_NODE })
-					.each(function(){ Birdify.wrapBirdTextRecursive($(this));});
-				ctx.contents().filter(function() {return this.nodeType == Node.TEXT_NODE })
-					.each(function(){
-						$(this).replaceWith($(this).text()
-							.replace(/([{\[\(])([^\{^\[^\(^\}^\]^\)]?)([}\]\)])/g, Birdify.wrapParenReplacer)
-							.replace(/([A-Za-z0-9]{5,8})([\.+@&\*=])([A-Za-z0-9]{5,8})/g, Birdify.wrapTextReplacer)
-							.replace(/([A-Za-z0-9]{3,4})([\.+@&\*=])([A-Za-z0-9]{3,4})/g, Birdify.wrapTextReplacer));
-					});
-			}
+    </script>
+  </head>
 
-			Birdify.activateBirds = function(ctx){
-				ctx.find('.bird-candidate-text').each(function(){
-					$(this).removeClass("bird-candidate-text");
-					Birdify.birdifyText($(this));
-				});
-				ctx.find('.bird-candidate-paren').each(function(){
-					$(this).removeClass("bird-candidate-paren");
-					Birdify($(this));
-				});
-			}
+  <body>
 
-			function scanAndBirdify(selector){
-				var workingSpace = $(selector);
-				Birdify.wrapBirdTextRecursive(workingSpace);
-				Birdify.activateBirds(workingSpace);
-			}
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/brownstein/birdify">View on GitHub</a>
 
-		</script>
-	</body>
+          <h1 id="project_title">Birdify<span class="birdified with-paren flightpath-1" haspath="true"><span class="left wing">(</span><span class="right wing">)</span></span></h1>
+          <h2 id="project_tagline">CSS and SASS mixins to make your text flap like birds!</h2>
+            <section id="header_birds">
+              ()(=) {}{*} [0][1][2][3][4][5][6][7][8][9]
+            </section>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/brownstein/birdify/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/brownstein/birdify/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+<h3>The Mixins</h3>
+<p>
+  Birdify is, at its core, a set of SASS (well, SCSS really) mixins that define two sets of animations - the flapping motion of a text-bird's "wings", and the flight path of the whole bird.
+</p>
+<h5>The Flap</h5>
+<p>
+  The flapWings mixin is designed to operate on spans of text with subspans of the classes "left wing" and "right wing". For example, to create a bird from a set of brackets ({}), one could use the following markup:
+</p>
+<pre><code>&lt;span class="birdified with-paren"&gt;
+  &lt;span class="left wing"&gt;{&lt;/span&gt;
+  &lt;span class="right wing"&gt;}&lt;/span&gt;
+&lt;/span&gt;
+</code></pre>
+<p>
+  And the following SCSS (which can be found in demo.scss):
+</p>
+<pre><code>.birdified {
+  display: inline-block;
+}
+
+.birdified.with-paren {
+  @include flapWings(0.3s, false, true);
+}
+</code></pre>
+<p>
+  Producing a flapping parenthesis pair like this: &nbsp;&nbsp; <span class="birdified with-paren"><span class="left wing">{</span><span class="right wing">}</span></span>
+</p>
+<p>
+  By the time you scroll down to see this, the parenthesis will aready be flapping, but the wings also include a short transition animation from non-flapping to flapping, ensuring a smooth transition to flapiness.
+</p>
+<h5>The Flightpath</h5>
+<p>
+  The flight path mixins, buildFlightPath and followFlightPath, are used for constructing and assigning flight path animations to the bird spans. BuildFlightPath takes the desired name of the flight path keyframe set, a series of control points, and the number of interpolation steps, and produces a set of keyframes following a cubic bezier curve. FolloyFligthPath, the path-assignment mixin, accepts a flightpath keyframe set name and a duration as arguments. Let's look at these two in action:
+</p>
+<pre><code>.birdified .fligthpath-1 {
+  @include followFlightPath("birdPath-1", 1.5s);
+}
+
+@include buildFlightPath("birdPath-1", 
+  2px, 10px, 10px, 10px, 500px,- 5px, 16);
+</code></pre>
+<p>
+  The demo SCSS and default CSS include six of these flightpaths, and the utility javascript expects said number based on the .flightpath-n convention.
+</p>
+<h3>The Javascript</h3>
+<p>
+  Writing all of the spans needed to birdify text can be tedious, so its much easier to do it programmatically. To that end, birdify.js has you covered. Turning text into birds is pretty easy - use <code>Birdify( your jquery selector ).fly();</code>.
+</p>
+<p>
+  Using this application/bird interface, we can construct the following demo:
+</p>
+<pre><code>&lt;div class=&quot;js-demo-birds&quot;&gt;
+    &lt;button onclick=&quot;demo_birds.fly()&quot;&gt;Fly&lt;/button&gt;
+    &lt;button onclick=&quot;demo_birds.reset()&quot;&gt;Reset&lt;/button&gt;
+    &lt;div&gt;
+      Here are some strong bird candidates: &lt;strong&gt;[ [], (), {}, [0] ], birds.birdify();&lt;/strong&gt;
+    &lt;/div&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+      demo_birds = new Birdify(&quot;.js-demo-birds&quot;, 3);
+    &lt;/script&gt;
+  &lt;/div&gt;</code></pre>
+<p>
+  <div class="js-demo-birds">
+    <button onclick="demo_birds.fly()">Fly</button>
+    <button onclick="demo_birds.reset()">Reset</button>
+    <div>
+      Here are some strong bird candidates: <strong>[ [], (), {}, [0] ], birds.birdify();</strong>
+    </div>
+    <script type="text/javascript">
+      demo_birds = new Birdify(".js-demo-birds", 3);
+    </script>
+  </div>
+</p>
+<hr/>
+<p>
+  Here's a little more detail on the Javascript ABI:
+</p>
+<pre><code>birds = Birdify(selector [, mode]);</code></pre>
+<p>
+  <div><code>selector</code> is the selector defining the region to operate on.</div>
+  <div><code>mode</code> is the type of birds you want to create. Defaults to parenthesis-based birds(1), but can be set to text-birds or both using the values 2 and 3 respectively.</div>
+  <div>Returns a Birdify object on which to call fly().</div>
+</p>
+<pre><code>birds.fly([timespan [, delay]]);</code></pre>
+<p>
+  <div>Sets birds aflap by converting the .bird-candidate tags to .birdified tags</div>
+  <div><code>timespan</code> is the length of time over which all selected birds should launch.</div>
+  <div><code>delay</code> is the time to wait before launching the first bird.</div>
+</p>
+<pre><code>birds.reset();</code></pre>
+<p>
+  Returns all birded text to the place on the page from whence it came, swapping all .birdifieds to .bird-candidates.
+</p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">This nonsense was developed by <a href="https://github.com/brownstein">brownstein</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
 </html>

@@ -236,33 +236,28 @@
     transform: rotate(-30deg);
   }
 }
-/* line 7, ../sass/demo.scss */
-.main {
-  max-width: 800px;
-  margin: 1em auto;
-  border-top: 1px solid #ccc;
-}
-
 /* Birds are bound to inline-block styles to prevent wings from doing anything odd */
-/* line 14, ../sass/demo.scss */
-.birdified, .bird {
+/* line 9, ../sass/demo.scss */
+.birdified {
   display: inline-block;
 }
 
+/* line 13, ../sass/demo.scss */
+.birdified .wing {
+  display: inline-block;
+}
+
+/* Bird-candidates are pre-wrapped spans that are waiting to become birds */
 /* line 18, ../sass/demo.scss */
-.birdified .wing, .bird .wing {
-  display: inline-block;
-}
-
-/* line 22, ../sass/demo.scss */
 .bird-candidate {
   display: inline;
 }
-/* line 24, ../sass/demo.scss */
+/* line 20, ../sass/demo.scss */
 .bird-candidate span {
   display: inline;
 }
 
+/* Definitions for perenthesis-winged birds */
 /* line 19, ../sass/_birdify_mixins.scss */
 .birdified.with-paren .left.wing {
   -webkit-animation: paren-flap-left-start 0.15s 1 linear, paren-flap-left 0.3s 0 infinite linear;
@@ -274,6 +269,7 @@
   animation: paren-flap-right-start 0.15s 1 linear, paren-flap-right 0.3s 0.15s infinite linear;
 }
 
+/* Definitions for text-winged birds */
 /* line 28, ../sass/_birdify_mixins.scss */
 .birdified.with-text .left.wing {
   -webkit-transform-origin: 100% 50%;
@@ -289,37 +285,39 @@
   animation: txt-flap-right-start 0.16667s 1 linear, txt-flap-right 0.5s 0.16667s infinite linear;
 }
 
-/* line 39, ../sass/demo.scss */
+/* Definition of flightpaths-1 through flightpath-6 */
+/* line 38, ../sass/demo.scss */
 .birdified.flightpath-1 {
   -webkit-animation: birdPath-1 1.7s linear, hideBird 1s infinite;
   animation: birdPath-1 1.7s linear, hideBird 1s 1.7s infinite;
 }
-/* line 39, ../sass/demo.scss */
+/* line 38, ../sass/demo.scss */
 .birdified.flightpath-2 {
   -webkit-animation: birdPath-2 1.9s linear, hideBird 1s infinite;
   animation: birdPath-2 1.9s linear, hideBird 1s 1.9s infinite;
 }
-/* line 39, ../sass/demo.scss */
+/* line 38, ../sass/demo.scss */
 .birdified.flightpath-3 {
   -webkit-animation: birdPath-3 2.1s linear, hideBird 1s infinite;
   animation: birdPath-3 2.1s linear, hideBird 1s 2.1s infinite;
 }
-/* line 39, ../sass/demo.scss */
+/* line 38, ../sass/demo.scss */
 .birdified.flightpath-4 {
   -webkit-animation: birdPath-4 2.3s linear, hideBird 1s infinite;
   animation: birdPath-4 2.3s linear, hideBird 1s 2.3s infinite;
 }
-/* line 39, ../sass/demo.scss */
+/* line 38, ../sass/demo.scss */
 .birdified.flightpath-5 {
   -webkit-animation: birdPath-5 2.5s linear, hideBird 1s infinite;
   animation: birdPath-5 2.5s linear, hideBird 1s 2.5s infinite;
 }
-/* line 39, ../sass/demo.scss */
+/* line 38, ../sass/demo.scss */
 .birdified.flightpath-6 {
   -webkit-animation: birdPath-6 2.7s linear, hideBird 1s infinite;
   animation: birdPath-6 2.7s linear, hideBird 1s 2.7s infinite;
 }
 
+/* Definitions of keyframes for flightpaths 1-6 */
 @-webkit-keyframes birdPath-1 {
   0% {
     -webkit-transform: translate(0px, 0px) rotate(0deg);
@@ -1208,522 +1206,28 @@
     opacity: 0;
   }
 }
-/* line 59, ../sass/demo.scss */
-h3 {
-  display: block;
-}
-
 /* Sample Bird definitions */
-/* line 64, ../sass/demo.scss */
-h3:hover .bird1 {
-  -webkit-animation: birdPath1 1.5s linear, hideBird 1s infinite;
-  animation: birdPath1 1.5s linear, hideBird 1s 1.5s infinite;
-}
-/* line 19, ../sass/_birdify_mixins.scss */
-h3:hover .bird1 .left.wing {
-  -webkit-animation: paren-flap-left-start 0.15s 1 linear, paren-flap-left 0.3s 0 infinite linear;
-  animation: paren-flap-left-start 0.15s 1 linear, paren-flap-left 0.3s 0.15s infinite linear;
-}
-/* line 23, ../sass/_birdify_mixins.scss */
-h3:hover .bird1 .right.wing {
-  -webkit-animation: paren-flap-right-start 0.15s 1 linear, paren-flap-right 0.3s 0 infinite linear;
-  animation: paren-flap-right-start 0.15s 1 linear, paren-flap-right 0.3s 0.15s infinite linear;
+/*
+h3:hover .bird1{
+	@include flapWings(0.3s, false, true);
+	@include followFlightPath("birdPath1", 1.5s);
 }
 
-/* line 69, ../sass/demo.scss */
-h3:hover .bird2 {
-  -webkit-animation: birdPath2 2s linear, hideBird 1s infinite;
-  animation: birdPath2 2s linear, hideBird 1s 2s infinite;
-}
-/* line 19, ../sass/_birdify_mixins.scss */
-h3:hover .bird2 .left.wing {
-  -webkit-animation: paren-flap-left-start 0.25s 1 linear, paren-flap-left 0.5s 0 infinite linear;
-  animation: paren-flap-left-start 0.25s 1 linear, paren-flap-left 0.5s 0.25s infinite linear;
-}
-/* line 23, ../sass/_birdify_mixins.scss */
-h3:hover .bird2 .right.wing {
-  -webkit-animation: paren-flap-right-start 0.25s 1 linear, paren-flap-right 0.5s 0 infinite linear;
-  animation: paren-flap-right-start 0.25s 1 linear, paren-flap-right 0.5s 0.25s infinite linear;
+h3:hover .bird2{
+	@include flapWings(0.5s, false, true);
+	@include followFlightPath("birdPath2", 2s);
 }
 
-/* line 74, ../sass/demo.scss */
-h3:hover .bird3 {
-  -webkit-animation: birdPath3 2.25s linear, hideBird 1s infinite;
-  animation: birdPath3 2.25s linear, hideBird 1s 2.25s infinite;
-}
-/* line 19, ../sass/_birdify_mixins.scss */
-h3:hover .bird3 .left.wing {
-  -webkit-animation: paren-flap-left-start 0.2s 1 linear, paren-flap-left 0.4s 0 infinite linear;
-  animation: paren-flap-left-start 0.2s 1 linear, paren-flap-left 0.4s 0.2s infinite linear;
-}
-/* line 23, ../sass/_birdify_mixins.scss */
-h3:hover .bird3 .right.wing {
-  -webkit-animation: paren-flap-right-start 0.2s 1 linear, paren-flap-right 0.4s 0 infinite linear;
-  animation: paren-flap-right-start 0.2s 1 linear, paren-flap-right 0.4s 0.2s infinite linear;
+h3:hover .bird3{
+	@include flapWings(0.4s, false, true);
+	@include followFlightPath("birdPath3", 2.25s);
 }
 
-/* line 79, ../sass/demo.scss */
-h3:hover .text-bird {
-  -webkit-animation: birdPath2 3s linear, hideBird 1s infinite;
-  animation: birdPath2 3s linear, hideBird 1s 3s infinite;
-}
-/* line 28, ../sass/_birdify_mixins.scss */
-h3:hover .text-bird .left.wing {
-  -webkit-transform-origin: 100% 50%;
-  transform-origin: 100% 50%;
-  -webkit-animation: txt-flap-left-start 0.16667s 0 1 linear, txt-flap-left 0.5s 0 infinite linear;
-  animation: txt-flap-left-start 0.16667s 1 linear, txt-flap-left 0.5s 0.16667s infinite linear;
-}
-/* line 34, ../sass/_birdify_mixins.scss */
-h3:hover .text-bird .right.wing {
-  -webkit-transform-origin: 0% 50%;
-  transform-origin: 0% 50%;
-  -webkit-animation: txt-flap-right-start 0.16667s 0 1 linear, txt-flap-right 0.5s 0 infinite linear;
-  animation: txt-flap-right-start 0.16667s 1 linear, txt-flap-right 0.5s 0.16667s infinite linear;
-}
-
+h3:hover .text-bird{
+	@include flapWings(0.5s, false, false);
+	@include followFlightPath("birdPath2", 3s);
+}*/
 /* Sample bird paths */
-@-webkit-keyframes birdPath1 {
-  0% {
-    -webkit-transform: translate(0px, 0px) rotate(0deg);
-    transform: translate(0px, 0px) rotate(0deg);
-  }
-  6% {
-    -webkit-transform: translate(-6.46973px, 2.19971px) rotate(-16deg);
-    transform: translate(-6.46973px, 2.19971px) rotate(-16deg);
-  }
-  12% {
-    -webkit-transform: translate(-20.35156px, 4.94141px) rotate(-16deg);
-    transform: translate(-20.35156px, 4.94141px) rotate(-16deg);
-  }
-  18% {
-    -webkit-transform: translate(-38.97949px, 8.06396px) rotate(-16deg);
-    transform: translate(-38.97949px, 8.06396px) rotate(-16deg);
-  }
-  25% {
-    -webkit-transform: translate(-59.6875px, 11.40625px) rotate(-16deg);
-    transform: translate(-59.6875px, 11.40625px) rotate(-16deg);
-  }
-  31% {
-    -webkit-transform: translate(-79.80957px, 14.80713px) rotate(-16deg);
-    transform: translate(-79.80957px, 14.80713px) rotate(-16deg);
-  }
-  37% {
-    -webkit-transform: translate(-96.67969px, 18.10547px) rotate(-14deg);
-    transform: translate(-96.67969px, 18.10547px) rotate(-14deg);
-  }
-  43% {
-    -webkit-transform: translate(-107.63184px, 21.14014px) rotate(14deg);
-    transform: translate(-107.63184px, 21.14014px) rotate(14deg);
-  }
-  50% {
-    -webkit-transform: translate(-110px, 23.75px) rotate(15deg);
-    transform: translate(-110px, 23.75px) rotate(15deg);
-  }
-  56% {
-    -webkit-transform: translate(-101.11816px, 25.77393px) rotate(15deg);
-    transform: translate(-101.11816px, 25.77393px) rotate(15deg);
-  }
-  62% {
-    -webkit-transform: translate(-78.32031px, 27.05078px) rotate(15deg);
-    transform: translate(-78.32031px, 27.05078px) rotate(15deg);
-  }
-  68% {
-    -webkit-transform: translate(-38.94043px, 27.41943px) rotate(15deg);
-    transform: translate(-38.94043px, 27.41943px) rotate(15deg);
-  }
-  75% {
-    -webkit-transform: translate(19.6875px, 26.71875px) rotate(15deg);
-    transform: translate(19.6875px, 26.71875px) rotate(15deg);
-  }
-  81% {
-    -webkit-transform: translate(100.22949px, 24.7876px) rotate(15deg);
-    transform: translate(100.22949px, 24.7876px) rotate(15deg);
-    opacity: 0.9375;
-  }
-  87% {
-    -webkit-transform: translate(205.35156px, 21.46484px) rotate(15deg);
-    transform: translate(205.35156px, 21.46484px) rotate(15deg);
-    opacity: 0.625;
-  }
-  93% {
-    -webkit-transform: translate(337.71973px, 16.58936px) rotate(15deg);
-    transform: translate(337.71973px, 16.58936px) rotate(15deg);
-    opacity: 0.3125;
-  }
-  100% {
-    -webkit-transform: translate(500px, 10px) rotate(15deg);
-    transform: translate(500px, 10px) rotate(15deg);
-    opacity: 0;
-  }
-}
-@keyframes birdPath1 {
-  0% {
-    -webkit-transform: translate(0px, 0px) rotate(0deg);
-    transform: translate(0px, 0px) rotate(0deg);
-  }
-  6% {
-    -webkit-transform: translate(-6.46973px, 2.19971px) rotate(-16deg);
-    transform: translate(-6.46973px, 2.19971px) rotate(-16deg);
-  }
-  12% {
-    -webkit-transform: translate(-20.35156px, 4.94141px) rotate(-16deg);
-    transform: translate(-20.35156px, 4.94141px) rotate(-16deg);
-  }
-  18% {
-    -webkit-transform: translate(-38.97949px, 8.06396px) rotate(-16deg);
-    transform: translate(-38.97949px, 8.06396px) rotate(-16deg);
-  }
-  25% {
-    -webkit-transform: translate(-59.6875px, 11.40625px) rotate(-16deg);
-    transform: translate(-59.6875px, 11.40625px) rotate(-16deg);
-  }
-  31% {
-    -webkit-transform: translate(-79.80957px, 14.80713px) rotate(-16deg);
-    transform: translate(-79.80957px, 14.80713px) rotate(-16deg);
-  }
-  37% {
-    -webkit-transform: translate(-96.67969px, 18.10547px) rotate(-14deg);
-    transform: translate(-96.67969px, 18.10547px) rotate(-14deg);
-  }
-  43% {
-    -webkit-transform: translate(-107.63184px, 21.14014px) rotate(14deg);
-    transform: translate(-107.63184px, 21.14014px) rotate(14deg);
-  }
-  50% {
-    -webkit-transform: translate(-110px, 23.75px) rotate(15deg);
-    transform: translate(-110px, 23.75px) rotate(15deg);
-  }
-  56% {
-    -webkit-transform: translate(-101.11816px, 25.77393px) rotate(15deg);
-    transform: translate(-101.11816px, 25.77393px) rotate(15deg);
-  }
-  62% {
-    -webkit-transform: translate(-78.32031px, 27.05078px) rotate(15deg);
-    transform: translate(-78.32031px, 27.05078px) rotate(15deg);
-  }
-  68% {
-    -webkit-transform: translate(-38.94043px, 27.41943px) rotate(15deg);
-    transform: translate(-38.94043px, 27.41943px) rotate(15deg);
-  }
-  75% {
-    -webkit-transform: translate(19.6875px, 26.71875px) rotate(15deg);
-    transform: translate(19.6875px, 26.71875px) rotate(15deg);
-  }
-  81% {
-    -webkit-transform: translate(100.22949px, 24.7876px) rotate(15deg);
-    transform: translate(100.22949px, 24.7876px) rotate(15deg);
-    opacity: 0.9375;
-  }
-  87% {
-    -webkit-transform: translate(205.35156px, 21.46484px) rotate(15deg);
-    transform: translate(205.35156px, 21.46484px) rotate(15deg);
-    opacity: 0.625;
-  }
-  93% {
-    -webkit-transform: translate(337.71973px, 16.58936px) rotate(15deg);
-    transform: translate(337.71973px, 16.58936px) rotate(15deg);
-    opacity: 0.3125;
-  }
-  100% {
-    -webkit-transform: translate(500px, 10px) rotate(15deg);
-    transform: translate(500px, 10px) rotate(15deg);
-    opacity: 0;
-  }
-}
-@-webkit-keyframes birdPath2 {
-  0% {
-    -webkit-transform: translate(0px, 0px) rotate(0deg);
-    transform: translate(0px, 0px) rotate(0deg);
-  }
-  6% {
-    -webkit-transform: translate(6.46973px, 65.92773px) rotate(15deg);
-    transform: translate(6.46973px, 65.92773px) rotate(15deg);
-  }
-  12% {
-    -webkit-transform: translate(20.35156px, 114.92188px) rotate(15deg);
-    transform: translate(20.35156px, 114.92188px) rotate(15deg);
-  }
-  18% {
-    -webkit-transform: translate(38.97949px, 148.79883px) rotate(15deg);
-    transform: translate(38.97949px, 148.79883px) rotate(15deg);
-  }
-  25% {
-    -webkit-transform: translate(59.6875px, 169.375px) rotate(15deg);
-    transform: translate(59.6875px, 169.375px) rotate(15deg);
-  }
-  31% {
-    -webkit-transform: translate(79.80957px, 178.4668px) rotate(15deg);
-    transform: translate(79.80957px, 178.4668px) rotate(15deg);
-  }
-  37% {
-    -webkit-transform: translate(96.67969px, 177.89063px) rotate(13deg);
-    transform: translate(96.67969px, 177.89063px) rotate(13deg);
-  }
-  43% {
-    -webkit-transform: translate(107.63184px, 169.46289px) rotate(-15deg);
-    transform: translate(107.63184px, 169.46289px) rotate(-15deg);
-  }
-  50% {
-    -webkit-transform: translate(110px, 155px) rotate(-16deg);
-    transform: translate(110px, 155px) rotate(-16deg);
-  }
-  56% {
-    -webkit-transform: translate(101.11816px, 136.31836px) rotate(-16deg);
-    transform: translate(101.11816px, 136.31836px) rotate(-16deg);
-  }
-  62% {
-    -webkit-transform: translate(78.32031px, 115.23438px) rotate(-16deg);
-    transform: translate(78.32031px, 115.23438px) rotate(-16deg);
-  }
-  68% {
-    -webkit-transform: translate(38.94043px, 93.56445px) rotate(-16deg);
-    transform: translate(38.94043px, 93.56445px) rotate(-16deg);
-  }
-  75% {
-    -webkit-transform: translate(-19.6875px, 73.125px) rotate(-16deg);
-    transform: translate(-19.6875px, 73.125px) rotate(-16deg);
-  }
-  81% {
-    -webkit-transform: translate(-100.22949px, 55.73242px) rotate(-16deg);
-    transform: translate(-100.22949px, 55.73242px) rotate(-16deg);
-    opacity: 0.9375;
-  }
-  87% {
-    -webkit-transform: translate(-205.35156px, 43.20313px) rotate(-16deg);
-    transform: translate(-205.35156px, 43.20313px) rotate(-16deg);
-    opacity: 0.625;
-  }
-  93% {
-    -webkit-transform: translate(-337.71973px, 37.35352px) rotate(-16deg);
-    transform: translate(-337.71973px, 37.35352px) rotate(-16deg);
-    opacity: 0.3125;
-  }
-  100% {
-    -webkit-transform: translate(-500px, 40px) rotate(-16deg);
-    transform: translate(-500px, 40px) rotate(-16deg);
-    opacity: 0;
-  }
-}
-@keyframes birdPath2 {
-  0% {
-    -webkit-transform: translate(0px, 0px) rotate(0deg);
-    transform: translate(0px, 0px) rotate(0deg);
-  }
-  6% {
-    -webkit-transform: translate(6.46973px, 65.92773px) rotate(15deg);
-    transform: translate(6.46973px, 65.92773px) rotate(15deg);
-  }
-  12% {
-    -webkit-transform: translate(20.35156px, 114.92188px) rotate(15deg);
-    transform: translate(20.35156px, 114.92188px) rotate(15deg);
-  }
-  18% {
-    -webkit-transform: translate(38.97949px, 148.79883px) rotate(15deg);
-    transform: translate(38.97949px, 148.79883px) rotate(15deg);
-  }
-  25% {
-    -webkit-transform: translate(59.6875px, 169.375px) rotate(15deg);
-    transform: translate(59.6875px, 169.375px) rotate(15deg);
-  }
-  31% {
-    -webkit-transform: translate(79.80957px, 178.4668px) rotate(15deg);
-    transform: translate(79.80957px, 178.4668px) rotate(15deg);
-  }
-  37% {
-    -webkit-transform: translate(96.67969px, 177.89063px) rotate(13deg);
-    transform: translate(96.67969px, 177.89063px) rotate(13deg);
-  }
-  43% {
-    -webkit-transform: translate(107.63184px, 169.46289px) rotate(-15deg);
-    transform: translate(107.63184px, 169.46289px) rotate(-15deg);
-  }
-  50% {
-    -webkit-transform: translate(110px, 155px) rotate(-16deg);
-    transform: translate(110px, 155px) rotate(-16deg);
-  }
-  56% {
-    -webkit-transform: translate(101.11816px, 136.31836px) rotate(-16deg);
-    transform: translate(101.11816px, 136.31836px) rotate(-16deg);
-  }
-  62% {
-    -webkit-transform: translate(78.32031px, 115.23438px) rotate(-16deg);
-    transform: translate(78.32031px, 115.23438px) rotate(-16deg);
-  }
-  68% {
-    -webkit-transform: translate(38.94043px, 93.56445px) rotate(-16deg);
-    transform: translate(38.94043px, 93.56445px) rotate(-16deg);
-  }
-  75% {
-    -webkit-transform: translate(-19.6875px, 73.125px) rotate(-16deg);
-    transform: translate(-19.6875px, 73.125px) rotate(-16deg);
-  }
-  81% {
-    -webkit-transform: translate(-100.22949px, 55.73242px) rotate(-16deg);
-    transform: translate(-100.22949px, 55.73242px) rotate(-16deg);
-    opacity: 0.9375;
-  }
-  87% {
-    -webkit-transform: translate(-205.35156px, 43.20313px) rotate(-16deg);
-    transform: translate(-205.35156px, 43.20313px) rotate(-16deg);
-    opacity: 0.625;
-  }
-  93% {
-    -webkit-transform: translate(-337.71973px, 37.35352px) rotate(-16deg);
-    transform: translate(-337.71973px, 37.35352px) rotate(-16deg);
-    opacity: 0.3125;
-  }
-  100% {
-    -webkit-transform: translate(-500px, 40px) rotate(-16deg);
-    transform: translate(-500px, 40px) rotate(-16deg);
-    opacity: 0;
-  }
-}
-@-webkit-keyframes birdPath3 {
-  0% {
-    -webkit-transform: translate(0px, 0px) rotate(0deg);
-    transform: translate(0px, 0px) rotate(0deg);
-  }
-  6% {
-    -webkit-transform: translate(-6.46973px, 4.76563px) rotate(-16deg);
-    transform: translate(-6.46973px, 4.76563px) rotate(-16deg);
-  }
-  12% {
-    -webkit-transform: translate(-20.35156px, 8.125px) rotate(-16deg);
-    transform: translate(-20.35156px, 8.125px) rotate(-16deg);
-  }
-  18% {
-    -webkit-transform: translate(-38.97949px, 10.54688px) rotate(-16deg);
-    transform: translate(-38.97949px, 10.54688px) rotate(-16deg);
-  }
-  25% {
-    -webkit-transform: translate(-59.6875px, 12.5px) rotate(-16deg);
-    transform: translate(-59.6875px, 12.5px) rotate(-16deg);
-  }
-  31% {
-    -webkit-transform: translate(-79.80957px, 14.45313px) rotate(-16deg);
-    transform: translate(-79.80957px, 14.45313px) rotate(-16deg);
-  }
-  37% {
-    -webkit-transform: translate(-96.67969px, 16.875px) rotate(-14deg);
-    transform: translate(-96.67969px, 16.875px) rotate(-14deg);
-  }
-  43% {
-    -webkit-transform: translate(-107.63184px, 20.23438px) rotate(14deg);
-    transform: translate(-107.63184px, 20.23438px) rotate(14deg);
-  }
-  50% {
-    -webkit-transform: translate(-110px, 25px) rotate(15deg);
-    transform: translate(-110px, 25px) rotate(15deg);
-  }
-  56% {
-    -webkit-transform: translate(-101.11816px, 31.64063px) rotate(15deg);
-    transform: translate(-101.11816px, 31.64063px) rotate(15deg);
-  }
-  62% {
-    -webkit-transform: translate(-78.32031px, 40.625px) rotate(15deg);
-    transform: translate(-78.32031px, 40.625px) rotate(15deg);
-  }
-  68% {
-    -webkit-transform: translate(-38.94043px, 52.42188px) rotate(15deg);
-    transform: translate(-38.94043px, 52.42188px) rotate(15deg);
-  }
-  75% {
-    -webkit-transform: translate(19.6875px, 67.5px) rotate(15deg);
-    transform: translate(19.6875px, 67.5px) rotate(15deg);
-  }
-  81% {
-    -webkit-transform: translate(100.22949px, 86.32813px) rotate(15deg);
-    transform: translate(100.22949px, 86.32813px) rotate(15deg);
-    opacity: 0.9375;
-  }
-  87% {
-    -webkit-transform: translate(205.35156px, 109.375px) rotate(15deg);
-    transform: translate(205.35156px, 109.375px) rotate(15deg);
-    opacity: 0.625;
-  }
-  93% {
-    -webkit-transform: translate(337.71973px, 137.10938px) rotate(15deg);
-    transform: translate(337.71973px, 137.10938px) rotate(15deg);
-    opacity: 0.3125;
-  }
-  100% {
-    -webkit-transform: translate(500px, 170px) rotate(15deg);
-    transform: translate(500px, 170px) rotate(15deg);
-    opacity: 0;
-  }
-}
-@keyframes birdPath3 {
-  0% {
-    -webkit-transform: translate(0px, 0px) rotate(0deg);
-    transform: translate(0px, 0px) rotate(0deg);
-  }
-  6% {
-    -webkit-transform: translate(-6.46973px, 4.76563px) rotate(-16deg);
-    transform: translate(-6.46973px, 4.76563px) rotate(-16deg);
-  }
-  12% {
-    -webkit-transform: translate(-20.35156px, 8.125px) rotate(-16deg);
-    transform: translate(-20.35156px, 8.125px) rotate(-16deg);
-  }
-  18% {
-    -webkit-transform: translate(-38.97949px, 10.54688px) rotate(-16deg);
-    transform: translate(-38.97949px, 10.54688px) rotate(-16deg);
-  }
-  25% {
-    -webkit-transform: translate(-59.6875px, 12.5px) rotate(-16deg);
-    transform: translate(-59.6875px, 12.5px) rotate(-16deg);
-  }
-  31% {
-    -webkit-transform: translate(-79.80957px, 14.45313px) rotate(-16deg);
-    transform: translate(-79.80957px, 14.45313px) rotate(-16deg);
-  }
-  37% {
-    -webkit-transform: translate(-96.67969px, 16.875px) rotate(-14deg);
-    transform: translate(-96.67969px, 16.875px) rotate(-14deg);
-  }
-  43% {
-    -webkit-transform: translate(-107.63184px, 20.23438px) rotate(14deg);
-    transform: translate(-107.63184px, 20.23438px) rotate(14deg);
-  }
-  50% {
-    -webkit-transform: translate(-110px, 25px) rotate(15deg);
-    transform: translate(-110px, 25px) rotate(15deg);
-  }
-  56% {
-    -webkit-transform: translate(-101.11816px, 31.64063px) rotate(15deg);
-    transform: translate(-101.11816px, 31.64063px) rotate(15deg);
-  }
-  62% {
-    -webkit-transform: translate(-78.32031px, 40.625px) rotate(15deg);
-    transform: translate(-78.32031px, 40.625px) rotate(15deg);
-  }
-  68% {
-    -webkit-transform: translate(-38.94043px, 52.42188px) rotate(15deg);
-    transform: translate(-38.94043px, 52.42188px) rotate(15deg);
-  }
-  75% {
-    -webkit-transform: translate(19.6875px, 67.5px) rotate(15deg);
-    transform: translate(19.6875px, 67.5px) rotate(15deg);
-  }
-  81% {
-    -webkit-transform: translate(100.22949px, 86.32813px) rotate(15deg);
-    transform: translate(100.22949px, 86.32813px) rotate(15deg);
-    opacity: 0.9375;
-  }
-  87% {
-    -webkit-transform: translate(205.35156px, 109.375px) rotate(15deg);
-    transform: translate(205.35156px, 109.375px) rotate(15deg);
-    opacity: 0.625;
-  }
-  93% {
-    -webkit-transform: translate(337.71973px, 137.10938px) rotate(15deg);
-    transform: translate(337.71973px, 137.10938px) rotate(15deg);
-    opacity: 0.3125;
-  }
-  100% {
-    -webkit-transform: translate(500px, 170px) rotate(15deg);
-    transform: translate(500px, 170px) rotate(15deg);
-    opacity: 0;
-  }
-}
+/*@include buildFlightPath("birdPath1", -10px,10px,50px,60px,500px,10px,16);
+//@include buildFlightPath("birdPath2", 10px,400px,-50px,40px,-500px,40px,16);
+//@include buildFlightPath("birdPath3", -10px,30px,50px,150px,500px,170px,16);*/
