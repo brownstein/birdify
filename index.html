@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
     <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/birdify.css">
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="birdify.js"></script>
 
     <title>Birdify</title>
@@ -50,6 +50,9 @@
 <h3>The Mixins</h3>
 <p>
   Birdify is, at its core, a set of SASS (well, SCSS really) mixins that define two sets of animations - the flapping motion of a text-bird's "wings", and the flight path of the whole bird.
+</p>
+<p>
+  These mixins require Compass for their flightpath calculation math, so make sure to compile your CSS with compass if you're rolling your own birds.
 </p>
 <h5>The Flap</h5>
 <p>
@@ -93,6 +96,9 @@
 </p>
 <h3>The Javascript</h3>
 <p>
+  First off, the JS applier code relies on jQuery. Make sure to include it!
+</p>
+<p>
   Writing all of the spans needed to birdify text can be tedious, so its much easier to do it programmatically. To that end, birdify.js has you covered. Turning text into birds is pretty easy - use <code>Birdify( your jquery selector ).fly();</code>.
 </p>
 <p>
@@ -122,7 +128,7 @@
 </p>
 <hr/>
 <p>
-  Here's a little more detail on the Javascript ABI:
+  Here's a little more detail on the Javascript application-bird interface:
 </p>
 <pre><code>birds = Birdify(selector [, mode]);</code></pre>
 <p>
