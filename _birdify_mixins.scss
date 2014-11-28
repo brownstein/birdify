@@ -14,27 +14,34 @@
 @mixin flapWings($flapTime, $flapBody, $parenMode){
 	@if ($flapBody){
 		-webkit-animation: flapBody $flapTime infinite linear;
+		-moz-animation: flapBody $flapTime infinite linear;
 	}
 	@if ($parenMode){
 		.left.wing{
 			-webkit-animation: paren-flap-left-start $flapTime/2 1 linear, paren-flap-left $flapTime 0 infinite linear;
+			-moz-animation: paren-flap-left-start $flapTime/2 1 linear, paren-flap-left $flapTime 0 infinite linear;
 			animation: paren-flap-left-start $flapTime/2 1 linear, paren-flap-left $flapTime $flapTime/2 infinite linear;
 		}
 		.right.wing{
 			-webkit-animation: paren-flap-right-start $flapTime/2 1 linear, paren-flap-right $flapTime 0 infinite linear;
+			-moz-animation: paren-flap-right-start $flapTime/2 1 linear, paren-flap-right $flapTime 0 infinite linear;
 			animation: paren-flap-right-start $flapTime/2 1 linear, paren-flap-right $flapTime $flapTime/2 infinite linear;
 		}
 	} @else {
 		.left.wing{
 			-webkit-transform-origin: 100% 50%;
+			-moz-transform-origin: 100% 50%;
 			transform-origin: 100% 50%;
 			-webkit-animation: txt-flap-left-start $flapTime/3 0 1 linear, txt-flap-left $flapTime 0 infinite linear;
+			-moz-animation: txt-flap-left-start $flapTime/3 0 1 linear, txt-flap-left $flapTime 0 infinite linear;
 			animation: txt-flap-left-start $flapTime/3 1 linear, txt-flap-left $flapTime $flapTime/3 infinite linear;
 		}
 		.right.wing{
 			-webkit-transform-origin: 0% 50%;
+			-moz-transform-origin: 0% 50%;
 			transform-origin: 0% 50%;
 			-webkit-animation: txt-flap-right-start $flapTime/3 0 1 linear, txt-flap-right $flapTime 0 infinite linear;
+			-moz-animation: txt-flap-right-start $flapTime/3 0 1 linear, txt-flap-right $flapTime 0 infinite linear;
 			animation: txt-flap-right-start $flapTime/3 1 linear, txt-flap-right $flapTime $flapTime/3 infinite linear;
 		}
 	}
@@ -89,6 +96,7 @@
 
 		#{$pct} {
 			-webkit-transform: translate($x,$y) rotate($rot); 
+			-moz-transform: translate($x,$y) rotate($rot); 
 			transform: translate($x,$y) rotate($rot);
 			@if (1-($i/$steps) <= 0.2){
 				opacity: (1-($i / $steps))/0.2;
@@ -212,27 +220,27 @@ $wingSpread: 0.3em;
 }
 
 @keyframes paren-flap-left-start {
-	0% { transform: rotate(0deg) translate(0, 0);}
-	100% { transform: rotate(70deg) translate(0, $wingSpread);}
+	0% { transform: rotate(0deg) translate(0, 0); -moz-transform: rotate(0deg) translate(0, 0);}
+	100% { transform: rotate(70deg) translate(0, $wingSpread); -moz-transform: rotate(70deg) translate(0, $wingSpread);}
 }
 
 @keyframes paren-flap-right-start {
-	0% { transform: rotate(0deg) translate(0, 0);}
-	100% { transform: rotate(-70deg) translate(0, $wingSpread);}
+	0% { transform: rotate(0deg) translate(0, 0); -moz-transform: rotate(0deg) translate(0, 0);}
+	100% { transform: rotate(-70deg) translate(0, $wingSpread); -moz-transform: rotate(-70deg) translate(0, $wingSpread);}
 }
 
 @keyframes paren-flap-left {
-	0% { transform: rotate(70deg) translate(0, $wingSpread);}
-	40% { transform: rotate(115deg) translate(0, $wingSpread);}
-	95% { transform: rotate(60deg) translate(0, $wingSpread);}
-	100% { transform: rotate(70deg) translate(0, $wingSpread);}
+	0% { transform: rotate(70deg) translate(0, $wingSpread); -moz-transform: rotate(70deg) translate(0em, $wingSpread);}
+	40% { transform: rotate(115deg) translate(0, $wingSpread); -moz-transform: rotate(115deg) translate(0em, $wingSpread);}
+	95% { transform: rotate(60deg) translate(0, $wingSpread); -moz-transform: rotate(60deg) translate(0em, $wingSpread);}
+	100% { transform: rotate(70deg) translate(0, $wingSpread); -moz-transform: rotate(70deg) translate(0em, $wingSpread);}
 }
 
 @keyframes paren-flap-right {
-	0% { transform: rotate(-70deg) translate(0em, $wingSpread);}
-	40% { transform: rotate(-115deg) translate(0em, $wingSpread);}
-	95% { transform: rotate(-60deg) translate(0em, $wingSpread);}
-	100% { transform: rotate(-70deg) translate(0em, $wingSpread);}
+	0% { transform: rotate(-70deg) translate(0em, $wingSpread); -moz-transform: rotate(-70deg) translate(0em, $wingSpread);}
+	40% { transform: rotate(-115deg) translate(0em, $wingSpread); -moz-transform: rotate(-115deg) translate(0em, $wingSpread);}
+	95% { transform: rotate(-60deg) translate(0em, $wingSpread); -moz-transform: rotate(-60deg) translate(0em, $wingSpread);}
+	100% { transform: rotate(-70deg) translate(0em, $wingSpread); -moz-transform: rotate(-70deg) translate(0em, $wingSpread);}
 }
 
 /* Keyframes for flapping text */
@@ -298,25 +306,25 @@ $wingSpread: 0.3em;
 }
 
 @keyframes txt-flap-left-start {
-	0% { transform: rotate(0deg);}
-	100% { transform: rotate(30deg);}
+	0% { transform: rotate(0deg); -moz-transform: rotate(0deg); }
+	100% { transform: rotate(30deg); -moz-transform: rotate(30deg); }
 }
 
 @keyframes txt-flap-right-start {
-	0% { transform: rotate(0deg);}
-	100% { transform: rotate(-30deg);}
+	0% { transform: rotate(0deg); -moz-transform: rotate(0deg); }
+	100% { transform: rotate(-30deg); -moz-transform: rotate(-30deg); }
 }
 
 @keyframes txt-flap-left {
-	0% { transform: rotate(30deg);}
-	40% { transform: rotate(-35deg);}
-	95% { transform: rotate(40deg);}
-	100% { transform: rotate(30deg);}
+	0% { transform: rotate(30deg); -moz-transform: rotate(0deg); }
+	40% { transform: rotate(-35deg); -moz-transform: rotate(-35deg); }
+	95% { transform: rotate(40deg); -moz-transform: rotate(40deg); }
+	100% { transform: rotate(30deg); -moz-transform: rotate(30deg); }
 }
 
 @keyframes txt-flap-right {
-	0% { transform: rotate(-30deg);}
-	40% { transform: rotate(35deg);}
-	95% { transform: rotate(-40deg);}
-	100% { transform: rotate(-30deg);}
+	0% { transform: rotate(-30deg); -moz-transform: rotate(0deg); }
+	40% { transform: rotate(35deg); -moz-transform: rotate(35deg); }
+	95% { transform: rotate(-40deg); -moz-transform: rotate(-40deg); }
+	100% { transform: rotate(-30deg); -moz-transform: rotate(-30deg); }
 }
