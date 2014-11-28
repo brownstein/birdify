@@ -4,3 +4,5 @@
 http_path = "/"
 css_dir = "stylesheets"
 sass_dir = "sass"
+
+#output_style = :expanded # :expanded or :nested or :compact or :compressed

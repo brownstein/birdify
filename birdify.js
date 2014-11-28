@@ -1,5 +1,4 @@
 
-
 function Birdify(ctx, mode){
 	if (this.constructor === Window){
 		return new Birdify(ctx, mode);
